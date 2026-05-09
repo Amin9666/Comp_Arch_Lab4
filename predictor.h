@@ -14,8 +14,12 @@
   concerned about the memory used by the simulated branch predictor.
 */
 
+/* 2-bit saturating counter predictor tables */
+#define INDEX_BITS  14
+#define BHT_ENTRIES (1 << INDEX_BITS)   /* 16384 entries */
+#define INDEX_MASK  (BHT_ENTRIES - 1)
 
-
+extern unsigned char bht[BHT_ENTRIES]; /* 2-bit saturating counters */
 
 /*
   Initialize the predictor.
