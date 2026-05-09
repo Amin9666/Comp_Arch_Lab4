@@ -17,7 +17,7 @@
  * Budget: 16384 entries * 2 bits = 32768 bits = 32K bits.
  */
 
-#include "predictor.h"
+#include "predictor_2sc.h"
 #include <string.h>
 
 unsigned char bht[BHT_ENTRIES];
