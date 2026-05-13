@@ -21,22 +21,22 @@ Compute CPU time for each using \( \text{IC} \times \text{CPI}/\text{Clock Rate}
 ### 3) What is speedup?
 **Answer:**  
 \[
-\text{Speedup}=\frac{\text{Time}_{\text{old}}}{\text{Time}_{\text{new}}}
+\text{Speedup} = \frac{\text{Time}_{\text{old}}}{\text{Time}_{\text{new}}}
 \]
 Speedup > 1 means improvement.
 
 ### 4) What is Amdahl’s Law and what does it mean?
 **Answer:**  
 \[
-\text{Speedup}_{\text{overall}}=\frac{1}{(1-P)+P/S}
+\text{Speedup}_{\text{overall}} = \frac{1}{(1-P)+P/S}
 \]
 \(P\): enhanced fraction, \(S\): speedup of enhanced part. Unimproved part limits total speedup.
 
 ### 5) What is MIPS and why can it be misleading?
 **Answer:**  
 \[
-\text{MIPS}=\frac{\text{Instruction Count}}{\text{Execution Time}\times10^6}
-=\frac{\text{Clock Rate}}{\text{CPI}\times10^6}
+\text{MIPS} = \frac{\text{Instruction Count}}{\text{Execution Time}\times10^6}
+= \frac{\text{Clock Rate}}{\text{CPI}\times10^6}
 \]
 It ignores instruction complexity and can mislead across ISAs/programs.
 
@@ -114,15 +114,15 @@ Array of predictor states indexed by PC bits (commonly lower bits after alignmen
 ### 20) What is GShare indexing?
 **Answer:**  
 \[
-\text{Index}=(PC>>2)\oplus GHR
+\text{Index} = (PC>>2)\oplus GHR
 \]
 It mixes branch address and global history to capture correlation.
 
 ### 21) How do you compute predictor accuracy and penalty?
 **Answer:**  
 \[
-\text{Accuracy}=\frac{\text{Correct}}{\text{Total}},\quad
-\text{Mispredict Rate}=1-\text{Accuracy}
+\text{Accuracy} = \frac{\text{Correct}}{\text{Total}},\quad
+\text{Mispredict Rate} = 1-\text{Accuracy}
 \]
 Penalty contribution = mispredict rate × branch penalty cycles.
 
@@ -133,7 +133,7 @@ Penalty contribution = mispredict rate × branch penalty cycles.
 ### 22) What is AMAT?
 **Answer:**  
 \[
-\text{AMAT}=\text{Hit Time}+\text{Miss Rate}\times\text{Miss Penalty}
+\text{AMAT} = \text{Hit Time}+\text{Miss Rate}\times\text{Miss Penalty}
 \]
 
 ### 23) How do you compute Tag/Index/Offset bits?
@@ -205,7 +205,7 @@ Referenced page not in memory; OS must fetch from disk, causing very large laten
 ### 37) What is Effective Access Time with TLB?
 **Answer:**  
 \[
-EAT=h(TLB+Mem)+(1-h)(TLB+PT+Mem)
+EAT = h(TLB+Mem)+(1-h)(TLB+PT+Mem)
 \]
 where \(h\) is TLB hit rate.
 
