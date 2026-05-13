@@ -1,0 +1,283 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{enumitem}
+\setlist[enumerate]{itemsep=0.4em}
+\title{CSE 3031 (Spring 2026)\\Homework 1--4: Extracted Questions with Answers}
+\date{}
+\begin{document}
+\maketitle
+
+\textbf{Note:} All questions are extracted from \texttt{CSE3031\_Spring\_2026\_HW1.pdf} through \texttt{HW4.pdf}. For HW2 Problem 1 and Problem 3, Figure 1 and Figure 2 numeric/layout details are image-based in the source PDF; answers are provided with explicit assumptions/formulas where figure data is required.
+
+\section*{Homework 1}
+\begin{enumerate}
+\item \textbf{Of the three factors in the processor performance equation ($\text{CPU Time}=IC\times CPI\times\text{cycle time}$), which is most influenced by: (a) technology, (b) compiler, (c) computer architect?}\\
+\textbf{Answer:}
+\begin{itemize}
+\item (a) Technology $\rightarrow$ mostly cycle time (clock period).
+\item (b) Compiler $\rightarrow$ mostly instruction count (IC).
+\item (c) Computer architect $\rightarrow$ mostly CPI (and secondarily cycle time).
+\end{itemize}
+
+\item \textbf{Given instruction mix and CPI data, find benchmark CPI.}\\
+\textbf{Answer:} Grouping categories:
+\begin{itemize}
+\item Load/store frequency $=26\%+9\%=35\%$, CPI $=1.4$
+\item ALU frequency $=14\%+13\%+4\%+9\%+6\%=46\%$, CPI $=1.0$
+\item Conditional branch frequency $=16\%$, CPI $=0.6(2.0)+0.4(1.5)=1.8$
+\item Jumps frequency $=1\%+2\%=3\%$, CPI $=1.2$
+\end{itemize}
+\[
+CPI = 0.35(1.4)+0.46(1.0)+0.16(1.8)+0.03(1.2)=1.274
+\]
+\textbf{Final CPI: $\boxed{1.274}$}
+
+\item \textbf{Two ISA implementations M1/M2 and programs P1/P2.}
+\begin{enumerate}[label=(\alph*)]
+\item \textbf{Required clock rate of M2 to match M1 on P1, with $f_{M1}=1$ GHz.}\\
+For P1: $CPI_{M1}=0.4(2)+0.5(1)+0.1(3)=1.6$, $CPI_{M2}=0.4(2)+0.5(2)+0.1(2)=2.0$.\\
+Equal time implies $f_{M2}=f_{M1}\cdot \frac{CPI_{M2}}{CPI_{M1}}=1\cdot\frac{2.0}{1.6}=\boxed{1.25\text{ GHz}}$.
+
+\item \textbf{Same clock, same instruction counts, equal runs of P1 and P2: which machine is faster?}\\
+For P2: $CPI_{M1}=0.5(2)+0.2(1)+0.3(3)=2.1$, $CPI_{M2}=2.0$.\\
+Average CPI over equal runs:
+\[
+\overline{CPI}_{M1}=\frac{1.6+2.1}{2}=1.85,\quad \overline{CPI}_{M2}=2.0
+\]
+So M1 is faster by $2.0/1.85\approx \boxed{1.081\times}$ ($\approx 8.1\%$).
+
+\item \textbf{Find workload using only P1/P2 that gives equal performance at same clock.}\\
+Let fraction of P1 be $x$. Then
+\[
+CPI_{M1}=1.6x+2.1(1-x)=2.1-0.5x,\quad CPI_{M2}=2.0
+\]
+Set equal: $2.1-0.5x=2.0\Rightarrow x=0.2$.\\
+\textbf{Workload: $\boxed{20\%\,P1,\ 80\%\,P2}$ (ratio $1:4$).}
+\end{enumerate}
+
+\item \textbf{Amdahl-style parallelization: sequential 15\%, parallel 85\%.}
+\begin{enumerate}[label=(\alph*)]
+\item Maximum speedup as $N\to\infty$:
+\[
+S_{\max}=\frac{1}{0.15}=\boxed{6.6667}
+\]
+\item Processors for within 20\% of max: need $S(N)\ge 0.8S_{\max}=5.3333$.
+\[
+\frac{1}{0.15+0.85/N}\ge 5.3333 \Rightarrow N\ge 22.67
+\]
+\textbf{Minimum $N=\boxed{23}$.}
+\item Processors for within 2\% of max: need $S(N)\ge 0.98S_{\max}=6.5333$.
+\[
+\frac{1}{0.15+0.85/N}\ge 6.5333 \Rightarrow N\ge 277.78
+\]
+\textbf{Minimum $N=\boxed{278}$.}
+\end{enumerate}
+
+\item \textbf{Availability/MTTF with FIT = 100.}
+\begin{enumerate}[label=(\alph*)]
+\item MTTF of one processor:
+\[
+MTTF=\frac{10^9\ \text{hours}}{100}=\boxed{10^7\ \text{hours}}
+\]
+\item If repair takes one day ($24$ h), availability:
+\[
+A=\frac{MTTF}{MTTF+MTTR}=\frac{10{,}000{,}000}{10{,}000{,}024}\approx \boxed{0.9999976}\ (99.99976\%)
+\]
+\item 1000-processor system, fail-stop if any processor fails:
+\[
+FIT_{sys}=1000\times 100=100{,}000,\quad MTTF_{sys}=\frac{10^9}{100{,}000}=\boxed{10{,}000\ \text{hours}}
+\]
+\end{enumerate}
+\end{enumerate}
+
+\section*{Homework 2}
+\begin{enumerate}
+\item \textbf{Compute effective CPI for MIPS using Fig. 1 (average of \texttt{gap} and \texttt{gcc}).}\\
+\textbf{Answer (formula):}
+\[
+CPI_{eff}=f_{ALU}(1.0)+f_{LS}(1.4)+f_{J}(1.2)+f_{CB}[0.6(2.0)+0.4(1.5)]
+\]
+\[
+\Rightarrow CPI_{eff}=f_{ALU}(1.0)+f_{LS}(1.4)+f_{J}(1.2)+f_{CB}(1.8)
+\]
+with $f_{ALU}+f_{LS}+f_J+f_{CB}=1$, where frequencies are the \emph{average} of gap and gcc from Fig. 1, and ``other'' is counted as ALU per prompt.
+
+\item \textbf{12-bit instruction length, 5-bit address fields.}
+\begin{enumerate}[label=(\alph*)]
+\item 3 two-address, 30 one-address, 45 zero-address possible?\\
+Use expanding-opcode feasibility:
+\[
+\frac{3}{2^2}+\frac{30}{2^7}+\frac{45}{2^{12}}=0.75+0.234375+0.010986=0.995361\le 1
+\]
+\textbf{Yes, possible.}
+
+\item 3 two-address, 31 one-address, 35 zero-address possible?\\
+\[
+\frac{3}{2^2}+\frac{31}{2^7}+\frac{35}{2^{12}}=0.75+0.242188+0.008545=1.000733>1
+\]
+\textbf{No, not possible.}
+
+\item Given 3 two-address and 24 zero-address already, max one-address?\\
+\[
+\frac{3}{2^2}+\frac{n_1}{2^7}+\frac{24}{2^{12}}\le 1
+\Rightarrow n_1\le 31.25
+\]
+\textbf{Maximum one-address instructions: $\boxed{31}$.}
+\end{enumerate}
+
+\item \textbf{ISA classes in Fig. 2 (stack, accumulator, register-memory, load-store).}
+\begin{enumerate}[label=(\alph*)]
+\item For $C=A+B$, addresses per instruction and total code size.\\
+Assuming standard textbook sequences:
+\begin{itemize}
+\item Stack: \texttt{PUSH A; PUSH B; ADD; POP C}. Addresses/instruction: 1,1,0,1.
+\item Accumulator: \texttt{LOAD A; ADD B; STORE C}. Addresses/instruction: 1,1,1.
+\item Register-memory: \texttt{LOAD R1,A; ADD R1,B; STORE C,R1}. Addresses/instruction: 2 each.
+\item Load-store: \texttt{LOAD R1,A; LOAD R2,B; ADD R3,R1,R2; STORE C,R3}. Addresses: 2,2,3,2.
+\end{itemize}
+Instruction sizes from prompt (opcode 8 bits, memory address 64 bits, register address 6 bits) are directly computed as:
+\[
+\text{Instr bits}=8 + 64\cdot(\#\text{mem addrs})+6\cdot(\#\text{reg addrs})
+\]
+and summed over each sequence.
+
+\item For $C=A+B,\ D=A-E,\ F=C+D$ (show destroyed operands/overhead):\\
+Under the same assumptions:
+\begin{itemize}
+\item Stack and accumulator require extra load/push operations because intermediate/results overwrite implicit operands (higher overhead).
+\item Register-memory has moderate overhead.
+\item Load-store usually has the lowest operand-destruction overhead due to explicit source/destination registers.
+\end{itemize}
+Compute totals by counting for each sequence: total instruction bits, memory bytes moved (loads/stores/push/pop), overhead instructions, and overhead data bytes.
+\end{enumerate}
+\end{enumerate}
+
+\section*{Homework 3}
+\begin{enumerate}
+\item \textbf{64B cache, 8B blocks, 2-way, 16-bit virtual address, 16KB physical memory.}
+\begin{enumerate}[label=(\alph*)]
+\item Total tag bits?\\
+Physical address bits $=\log_2(16\text{KB})=14$.\\
+Cache lines $=64/8=8$, sets $=8/2=4$, index bits $=2$, offset bits $=3$, tag bits/line $=14-2-3=9$.\\
+Total tag bits $=8\times 9=\boxed{72}$.
+
+\item Minimum page size to avoid synonym problem for virtually indexed cache?\\
+Need page offset bits $\ge$ index+offset $=2+3=5$.\\
+Minimum page size $=2^5=\boxed{32\text{ bytes}}$.
+
+\item If page size is 64B, page-table size?\\
+Virtual pages $=2^{16-6}=1024$. Physical page number bits $=14-6=8$.\\
+Per-PTE bits $=8+4=12\Rightarrow 2$ bytes (integral bytes).\\
+Page table size $=1024\times2=\boxed{2048\text{ bytes}=2\text{KB}}$.
+
+\item Why split L1 but unified L2?\\
+Split L1 supports parallel instruction fetch and data access (lower latency, fewer structural conflicts). Unified L2 improves capacity sharing/utilization and overall miss behavior where latency pressure is lower.
+\end{enumerate}
+
+\item \textbf{2-way set-associative 16KB cache, 32B blocks, loop accesses $a[i]$ and $a[1024i]$, $i=0..1023$.}\\
+\textbf{Answer:} Total accesses $=2048$.\\
+Misses from $a[i]$: sequential first 1024 ints, 8 ints/block $\Rightarrow 128$ misses.\\
+Misses from $a[1024i]$: all unique blocks except $i=0$ overlaps with $a[0]$ $\Rightarrow 1023$ misses.\\
+Total misses $=128+1023=\boxed{1151}$, hits $=2048-1151=\boxed{897}$.
+
+\item \textbf{8KB direct-mapped cache vs 64KB 4-way cache. Hit times 0.22ns and 0.52ns, miss rates $m_1,m_2$.}
+\begin{enumerate}[label=(\alph*)]
+\item For miss penalty $P=100$ns, smaller cache advantageous when:
+\[
+0.22+m_1P < 0.52+m_2P \Rightarrow m_1-m_2 < \frac{0.30}{100}=\boxed{0.003}
+\]
+\item Repeat:
+\[
+P=10\text{ns}:\ m_1-m_2<\boxed{0.03};\qquad P=1000\text{ns}:\ m_1-m_2<\boxed{0.0003}
+\]
+Conclusion: as miss penalty increases, the smaller cache is beneficial only if its miss-rate disadvantage is extremely small.
+\end{enumerate}
+
+\item \textbf{TLB/Page-table classification for trace (Table 3).}\\
+Results:
+\begin{center}
+\begin{tabular}{c|c|c}
+VP & TLB & Page table \\\hline
+1 & Miss & Fault \\
+5 & Hit & X \\
+9 & Miss & Fault \\
+14 & Miss & Fault \\
+10 & Hit & X \\
+6 & Miss & Hit \\
+15 & Hit & X \\
+12 & Miss & Hit \\
+7 & Miss & Hit \\
+2 & Miss & Fault \\
+\end{tabular}
+\end{center}
+
+\item \textbf{Page faults for LRU and FIFO; final frame contents.}\\
+Reference string: $0,2,4,5,2,4,3,11,2,10$ with 4 frames.
+\begin{itemize}
+\item LRU faults at references: $\{0,2,4,5,3,11,10\}$ $\Rightarrow \boxed{7}$ faults. Final pages: $\boxed{\{2,3,10,11\}}$.
+\item FIFO faults at references: $\{0,2,4,5,3,11,2,10\}$ $\Rightarrow \boxed{8}$ faults. Final pages: $\boxed{\{3,11,2,10\}}$.
+\end{itemize}
+\end{enumerate}
+
+\section*{Homework 4}
+\begin{enumerate}
+\item \textbf{5-stage perfectly balanced pipeline, instruction mix given.}
+\begin{enumerate}[label=(\alph*)]
+\item Ideal pipelining speedup over unpipelined single-cycle: $\boxed{5\times}$.
+\item Stall contribution:
+\[
+\text{Load-use stalls}=0.25\times0.40\times1=0.10
+\]
+\[
+\text{Branch-after-ALU stalls}=0.15\times0.50\times2=0.15
+\]
+Total stalls/instruction $=0.25$, so $CPI_{pipe}=1.25$.\\
+Actual speedup $=5/1.25=\boxed{4\times}$. Decrease from ideal: $\boxed{1\times}$ (20\%).
+\end{enumerate}
+
+\item \textbf{Stage times IF/ID/EX/MEM/WB = 1, 1.5, 1, 2, 1.5 ns.}
+\begin{enumerate}[label=(\alph*)]
+\item Single-cycle clock time: $1+1.5+1+2+1.5=\boxed{7\text{ ns}}$.
+\item Multi-cycle clock time: $\max=\boxed{2\text{ ns}}$.
+\item Pipelined clock time: $\max=\boxed{2\text{ ns}}$.
+\item Speedup (ideal long stream): $7/2=\boxed{3.5\times}$.
+\end{enumerate}
+
+\item \textbf{Deep pipeline branch penalty table (target at stage 3, condition at stage 4).}\\
+\begin{center}
+\begin{tabular}{l|c|c|c}
+Strategy & Unconditional branch & Conditional taken & Conditional untaken \\\hline
+Stall until resolved & 2 cycles & 3 cycles & 3 cycles \\
+Predict taken & 2 cycles & 2 cycles & 3 cycles \\
+Predict untaken & 2 cycles & 3 cycles & 0 cycles \\
+\end{tabular}
+\end{center}
+
+\item \textbf{Dependencies/hazards for given 5 instructions.}\\
+Key dependencies:
+\begin{itemize}
+\item RAW: $1\to2$ on $R1$ (\textbf{load-use hazard, needs stall}), $1\to3$ on $R1$ (forwarding/no extra stall), $2\to5$ on $R7$ (no stall with timing assumption).
+\item WAR: $2\to3$ on $R8$, $2\to4$ on $R1$, $3\to4$ on $R1$.
+\item WAW: $1\to4$ on $R1$.
+\end{itemize}
+Only definite required stall is $\boxed{1\to2\ \text{(LD}\to\text{use)}}$.
+
+\item \textbf{Loop branch prediction tables.}
+\begin{enumerate}[label=(\alph*)]
+\item \textbf{2-bit saturating predictor (initial 00):}
+\begin{itemize}
+\item Branch 1 outcomes $T,N,T,N,T,N,T,N$: predictions $\boxed{N,N,N,N,N,N,N,N}$.
+\item Branch 2 outcomes $T,T,T,N,T,T,T,N$: predictions $\boxed{N,N,T,T,T,T,T,T}$.
+\end{itemize}
+
+\item \textbf{(1,1) correlated predictor (initial N/N, prior branch outcome N).}\\
+Using 1-bit global history and per-branch two-entry predictors:
+\begin{itemize}
+\item Branch 1 predictions: $\boxed{N,N,N,T,T,N,N,T}$.
+\item Branch 2 predictions: $\boxed{N,N,T,T,T,N,T,T}$.
+\end{itemize}
+\end{enumerate}
+\end{enumerate}
+
+\end{document}
