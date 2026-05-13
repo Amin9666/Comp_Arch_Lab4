@@ -114,7 +114,7 @@ Array of predictor states indexed by PC bits (commonly lower bits after alignmen
 ### 20) What is GShare indexing?
 **Answer:**  
 \[
-\text{Index} = (PC>>2)\oplus GHR
+\text{Index} = (PC>>2) \oplus GHR
 \]
 It mixes branch address and global history to capture correlation.
 
@@ -133,7 +133,7 @@ Penalty contribution = mispredict rate × branch penalty cycles.
 ### 22) What is AMAT?
 **Answer:**  
 \[
-\text{AMAT} = \text{Hit Time}+\text{Miss Rate}\times\text{Miss Penalty}
+\text{AMAT} = \text{Hit Time} + \text{Miss Rate} \times \text{Miss Penalty}
 \]
 
 ### 23) How do you compute Tag/Index/Offset bits?
@@ -205,7 +205,7 @@ Referenced page not in memory; OS must fetch from disk, causing very large laten
 ### 37) What is Effective Access Time with TLB?
 **Answer:**  
 \[
-EAT = h(TLB+Mem)+(1-h)(TLB+PT+Mem)
+EAT = h(TLB + Mem) + (1-h)(TLB + PT + Mem)
 \]
 where \(h\) is TLB hit rate.
 
