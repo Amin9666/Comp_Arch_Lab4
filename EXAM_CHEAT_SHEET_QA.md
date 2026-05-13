@@ -103,7 +103,7 @@ Often mispredicts at loop exit and re-entry (typically two mistakes per loop run
 
 ### 18) How does a 2-bit saturating counter predictor work?
 **Answer:**  
-States: 00 SNT, 01 WNT, 10 WT, 11 ST.  
+States: 00 Strongly Not Taken (SNT), 01 Weakly Not Taken (WNT), 10 Weakly Taken (WT), 11 Strongly Taken (ST).  
 Predict taken in 10/11; not-taken in 00/01.  
 Increment on taken, decrement on not-taken, saturating at ends.
 
@@ -208,6 +208,7 @@ Referenced page not in memory; OS must fetch from disk, causing very large laten
 EAT = h(TLB + Mem) + (1-h) \times (TLB + PT + Mem)
 \]
 where \(h\) is TLB hit rate.
+Here, TLB = TLB access time, Mem = memory access time, PT = page-table access time.
 
 ### 38) FIFO vs LRU page replacement?
 **Answer:**  
