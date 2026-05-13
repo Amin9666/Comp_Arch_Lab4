@@ -21,7 +21,7 @@ Compute CPU time for each using \( \text{IC} \times \text{CPI}/\text{Clock Rate}
 ### 3) What is speedup?
 **Answer:**  
 \[
-\text{Speedup}=\frac{T_{\text{old}}}{T_{\text{new}}}
+\text{Speedup}=\frac{\text{Time}_{\text{old}}}{\text{Time}_{\text{new}}}
 \]
 Speedup > 1 means improvement.
 
@@ -35,7 +35,8 @@ Speedup > 1 means improvement.
 ### 5) What is MIPS and why can it be misleading?
 **Answer:**  
 \[
-\text{MIPS}=\frac{\text{Clock Rate}}{\text{CPI}\times10^6}
+\text{MIPS}=\frac{\text{Instruction Count}}{\text{Execution Time}\times10^6}
+=\frac{\text{Clock Rate}}{\text{CPI}\times10^6}
 \]
 It ignores instruction complexity and can mislead across ISAs/programs.
 
