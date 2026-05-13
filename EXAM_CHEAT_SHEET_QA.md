@@ -35,8 +35,8 @@ Speedup > 1 means improvement.
 ### 5) What is MIPS and why can it be misleading?
 **Answer:**  
 \[
-\text{MIPS} = \frac{\text{Instruction Count}}{\text{Execution Time}\times10^6}
-= \frac{\text{Clock Rate}}{\text{CPI}\times10^6}
+\text{MIPS} = \frac{\text{Instruction Count}}{\text{Execution Time} \times 10^6}
+= \frac{\text{Clock Rate}}{\text{CPI} \times 10^6}
 \]
 It ignores instruction complexity and can mislead across ISAs/programs.
 
@@ -138,9 +138,9 @@ Penalty contribution = mispredict rate × branch penalty cycles.
 
 ### 23) How do you compute Tag/Index/Offset bits?
 **Answer:**  
-- Offset = \(\log_2(\text{block size})\)  
+- Offset = log2(block size)  
 - Sets = blocks / associativity  
-- Index = \(\log_2(\text{sets})\)  
+- Index = log2(sets)  
 - Tag = address bits − index − offset
 
 ### 24) Direct-mapped vs fully associative vs set-associative?
@@ -205,7 +205,7 @@ Referenced page not in memory; OS must fetch from disk, causing very large laten
 ### 37) What is Effective Access Time with TLB?
 **Answer:**  
 \[
-EAT = h(TLB + Mem) + (1-h)(TLB + PT + Mem)
+EAT = h(TLB + Mem) + (1-h) \times (TLB + PT + Mem)
 \]
 where \(h\) is TLB hit rate.
 
